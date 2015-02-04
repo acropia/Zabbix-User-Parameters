@@ -1,4 +1,5 @@
 =Zabbix User Parameters
+
 The monitoring application Zabbix Agent is extensible by adding UserParameters to the agent configuration file. Everything that is reachable and can be output by a script, can be used as an Item in Zabbix.
 
 The scripts I provide are ready to use stand-alone Powershell or Bash scripts. I intend to write usage documentation per stand-alone script.
