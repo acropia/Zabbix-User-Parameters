@@ -14,6 +14,8 @@ If ($args.Length -eq 0) {
 	Write-Host "  Usage: sh.rcapi.ps1 Function Param1 [Param2]";
 	Write-Host "";
 	Write-Host "Functions:"
+	Write-Host "  me.queue.size             Return active queue size"
+	Write-Host "      QueueName             - Inbound or Outbound"
 	Write-Host "  process.grouped.count     Count grouped processes"
 	Write-Host "      Limit=5               - Limit result to top <Limit>"
 	Write-Host "  process.iops.top          Process disk IO"
@@ -29,6 +31,9 @@ Try {
 	
 	If ($function -eq "service.restart") {
 		. (Join-Path $scriptPath 'api\functions\service\restart.ps1');
+	}
+	ElseIf ($function -eq "me.queue.size") {
+		. (Join-Path $scriptPath 'api\functions\MailEnable\queue.size.ps1');
 	}
 	ElseIf ($function -eq "process.grouped.count") {
 		. (Join-Path $scriptPath 'api\functions\process\grouped.count.ps1');
