@@ -16,6 +16,8 @@ If ($args.Length -eq 0) {
 	Write-Host "Functions:"
 	Write-Host "  process.grouped.count     Count grouped processes"
 	Write-Host "      Limit=5               - Limit result to top <Limit>"
+	Write-Host "  process.iops.top          Process disk IO"
+	Write-Host "      Limit=5               - Limit result to top <Limit>"
 	Write-Host "  service.restart           Restart a Windows service"
 	Write-Host "      ServiceName           - Windows Service Name"
 	Write-Host "";
@@ -30,6 +32,9 @@ Try {
 	}
 	ElseIf ($function -eq "process.grouped.count") {
 		. (Join-Path $scriptPath 'api\functions\process\grouped.count.ps1');
+	}
+	ElseIf ($function -eq "process.iops.top") {
+		. (Join-Path $scriptPath 'api\functions\process\iops.top.ps1');
 	}
 	Else {
 		Throw "Function $function is not a registered SoHosted Zabbix API function";
