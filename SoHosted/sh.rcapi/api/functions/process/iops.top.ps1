@@ -17,7 +17,7 @@ Function ModuleMain($limit) {
 			$limit = 5;
 		}
 
-		$samples = (Get-Counter -Counter "\Process(*)\IO Data Operations/sec" -SampleInterval 5 -ErrorAction SilentlyContinue).CounterSamples |
+		$samples = (Get-Counter -Counter "\Process(*)\IO Data Operations/sec" -SampleInterval 1 -ErrorAction SilentlyContinue).CounterSamples |
 			Where-Object { $_.CookedValue -gt 0 } |
 			Where-Object { $_.InstanceName -ne "_total" } |
 			Sort-Object -Descending "CookedValue" |
