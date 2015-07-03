@@ -11,10 +11,13 @@ If ( -Not (Test-Path Variable:RcApi)) {
 $logToScreen = $False;
 $logToFile = $False;
 
-Function ModuleMain($limit) {
+Function ModuleMain($limit, $interval) {
 	Try {
 		If ( -Not ($limit)) {
 			$limit = 5;
+		}
+		If ( -Not ($interval)) {
+			$interval = 60;
 		}
 
 		$samples = (Get-Counter -Counter "\Process(*)\IO Data Operations/sec" -SampleInterval 1 -ErrorAction SilentlyContinue).CounterSamples |
@@ -33,7 +36,9 @@ Function ModuleMain($limit) {
 		$output += "<thead><tr><th>InstanceName</th><th>IOPS</th></thead>`n";
 		$output += "<tbody>`n";
 		$samples | Foreach-Object {
-			$output += "<tr><td>" + $_.InstanceName + "</td><td>" + $_.IOPerSec + "</td></tr>`n";
+			$iops = $_.IOPerSec / $interval;
+			$iops = [math]::Round($iops,1);
+			$output += "<tr><td>" + $_.InstanceName + "</td><td>" + $iops + "</td></tr>`n";
 		}
 		$output += "</tbody>`n";
 		$output += "</table>";

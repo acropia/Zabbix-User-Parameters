@@ -7,6 +7,7 @@ $RcApi = 0.1;
 
 $function = $args[0];
 $param1 = $args[1];
+$param2 = $args[2];
 
 If ($args.Length -eq 0) {
 	Write-Host "SoHosted Remote Command API for Zabbix Agent"
@@ -46,7 +47,7 @@ Try {
 	}
 
 	LogInfo "sh.rcapi.ps1 ------------------------------------------";
-	$output = ModuleMain($param1);
+	$output = ModuleMain $param1 $param2;
 	Return $output;
 }
 Catch [Exception] {
