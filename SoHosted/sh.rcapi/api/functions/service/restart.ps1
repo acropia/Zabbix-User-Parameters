@@ -24,6 +24,7 @@ Function ModuleMain($serviceName) {
 		}
 
 		$stopped = $False;
+		$serviceName = $serviceName -Replace "_DOLLAR_", "$";
 		LogInfo "ServiceName: $serviceName"
 
 		If ( -Not @(Get-Service | Where-Object { $_.Name -eq $serviceName}).Length -eq 1) {
@@ -34,7 +35,7 @@ Function ModuleMain($serviceName) {
 		LogInfo "Current service status: $serviceStatus";
 
 		LogInfo "Stopping service..."
-		Stop-Service $serviceName;
+		Stop-Service $serviceName -Force;
 
 		$serviceStatus = GetServiceStatus($serviceName);
 		LogInfo "Service status: $serviceStatus";

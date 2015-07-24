@@ -15,12 +15,21 @@ If ($args.Length -eq 0) {
 	Write-Host "  Usage: sh.rcapi.ps1 Function Param1 [Param2]";
 	Write-Host "";
 	Write-Host "Functions:"
+	Write-Host "  iis.apppool.discovery     Return list of application pools"
 	Write-Host "  me.queue.size             Return active queue size"
-	Write-Host "      QueueName             - Inbound or Outbound"
+	Write-Host "      QueueName             - Inbound or Outgoing"
+	Write-Host "  process.count             Count given processes"
+	Write-Host "      ProcessName           - Process Name"
 	Write-Host "  process.grouped.count     Count grouped processes"
 	Write-Host "      Limit=5               - Limit result to top <Limit>"
 	Write-Host "  process.iops.top          Process disk IO"
 	Write-Host "      Limit=5               - Limit result to top <Limit>"
+	Write-Host "  process.stop              Stop a Windows process"
+	Write-Host "      ProcessName           - Process Name"
+	Write-Host "  process.ws                Return Working Set (used memory)"
+	Write-Host "      ProcessName           - Process Name"
+	Write-Host "  process.ws.service        Return Working Set (used memory) by service name"
+	Write-Host "      ServiceName           - Service Name"
 	Write-Host "  service.restart           Restart a Windows service"
 	Write-Host "      ServiceName           - Windows Service Name"
 	Write-Host "";
@@ -30,17 +39,32 @@ Try {
 	$scriptPath = Split-Path $MyInvocation.MyCommand.Path;
 	. (Join-Path $scriptPath 'api\bootstrap.ps1');
 	
-	If ($function -eq "service.restart") {
-		. (Join-Path $scriptPath 'api\functions\service\restart.ps1');
+	If ($function -eq "iis.apppool.discovery") {
+		. (Join-Path $scriptPath 'api\functions\IIS\apppool.discovery.ps1');
 	}
 	ElseIf ($function -eq "me.queue.size") {
 		. (Join-Path $scriptPath 'api\functions\MailEnable\queue.size.ps1');
+	}
+	ElseIf ($function -eq "process.count") {
+		. (Join-Path $scriptPath 'api\functions\process\count.ps1');
 	}
 	ElseIf ($function -eq "process.grouped.count") {
 		. (Join-Path $scriptPath 'api\functions\process\grouped.count.ps1');
 	}
 	ElseIf ($function -eq "process.iops.top") {
 		. (Join-Path $scriptPath 'api\functions\process\iops.top.ps1');
+	}
+	ElseIf ($function -eq "process.stop") {
+		. (Join-Path $scriptPath 'api\functions\process\stop.ps1');
+	}
+	ElseIf ($function -eq "process.ws") {
+		. (Join-Path $scriptPath 'api\functions\process\ws.ps1');
+	}	
+	ElseIf ($function -eq "process.ws.service") {
+		. (Join-Path $scriptPath 'api\functions\process\ws.service.ps1');
+	}	
+	ElseIf ($function -eq "service.restart") {
+		. (Join-Path $scriptPath 'api\functions\service\restart.ps1');
 	}
 	Else {
 		Throw "Function $function is not a registered SoHosted Zabbix API function";

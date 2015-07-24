@@ -17,7 +17,7 @@ Function ModuleMain($queueName) {
 			Throw "Parameter queueName not valid. Must be Inbound or Outgoing";
 		}
 
-		$queuePath = "C:\Program Files\Mail Enable\Queues\SMTP\$queue";
+		$queuePath = "C:\Program Files\Mail Enable\Queues\SMTP\$queueName";
 		If (-Not (Test-Path $queuePath)) {
 			Throw "Queue Path not found";
 		}
